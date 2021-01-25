@@ -47,8 +47,12 @@ class AntSystem:
         self.heuristic_factor = heuristic_factor
         
     def initialize(self):
-        self.one_solution = np.zeros(self.num_cities,dtype=int)
+        self.one_solution = np.arange(self.num_cities,dtype=int)
         self.solutions  = np.zeros((self.num_ants,self.num_cities),dtype=int)
+        for i in range(self.num_ants):
+            for c in range(self.num_cities):
+                self.solutions[i][c] = c
+                
         self.objective_value = np.zeros(self.num_ants)
         self.best_solution = np.zeros(self.num_cities,dtype=int)
         self.best_objective_value = sys.float_info.max
@@ -59,10 +63,9 @@ class AntSystem:
         #heuristic_values
         for from_  in range(self.num_cities):
             for to in range(self.num_cities):
-                if(from_==to):
-                    self.heuristic_values[from_][to] = 0
-                else:
-                    self.heuristic_values[from_][to] = 1/self.get_distance(self.coordinate[from_],self.coordinate[to]) 
+                if(from_==to):continue
+                distance = self.get_distance(self.coordinate[from_],self.coordinate[to])
+                self.heuristic_values[from_][to] = 1/distance
      
     def do_roulette_wheel_selection(self,fitness_list):
         sum_fitness = sum(fitness_list)
