@@ -91,10 +91,10 @@ class AntSystem:
             
     def _an_ant_construct_its_solution(self):
         candidates = [i for i in range(self.num_cities)]
-        random.shuffle(candidates)
-         
-        current_city_id = candidates.pop()
+        #random choose city as first city 
+        current_city_id = random.choice(candidates)
         self.one_solution[0] = current_city_id
+        candidates.remove(current_city_id)
         
         #select best from candiate
         for t in range(1,self.num_cities-1):
