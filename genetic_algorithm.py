@@ -43,6 +43,8 @@ class GeneticAlgorithm:
         self.pop_size = pop_size
         self.selection_type = selection_type
         self.crossover_size = int(pop_size*crossover_rate)
+        if(self.crossover_size%2==1):
+            self.crossover_size -= 1;
         self.mutation_size =  int(pop_size*mutation_rate)
         self.total_size = self.pop_size+self.mutation_size+self.crossover_size
         self.number_of_genes = number_of_genes
@@ -107,14 +109,14 @@ class GeneticAlgorithm:
             parent2_index  = self.indexs[i+1]
             
             if(self.crossover_type == CrossoverType.PartialMappedCrossover):
-                self.PartialMappedCrossover(parent1_index,parent2_index,child1_index,child2_index)
+                self.partial_mapped_crossover(parent1_index,parent2_index,child1_index,child2_index)
                 self.objective_values[child1_index] = self.compute_objective_value(self.chromosomes[child1_index])
                 self.objective_values[child2_index] = self.compute_objective_value(self.chromosomes[child2_index])
             
             child1_index +=2
             child2_index +=2
         
-    def PartialMappedCrossover(self,p1,p2,c1,c2):
+    def partial_mapped_crossover(self,p1,p2,c1,c2):
         #reset
         for i in range(self.number_of_genes):
             self.mapping[i] = -1
