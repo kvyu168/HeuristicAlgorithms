@@ -7,7 +7,6 @@ Created on Tue Jan 26 20:18:13 2021
 #%%
 import pandas as pd
 import numpy as np
-import sys
 import random
 from enum import Enum
 #%%
@@ -64,11 +63,9 @@ class GeneticAlgorithm:
                 self.chromosomes[i][j] = j
             np.random.shuffle(self.chromosomes[i])
        
-        
         for i in range(self.pop_size,self.total_size):
             for j in range(self.number_of_genes):
                 self.chromosomes[i][j] = -1
-  
                 
         self.fitness = np.zeros(self.total_size) 
         self.objective_values = np.zeros(self.total_size)
@@ -124,17 +121,7 @@ class GeneticAlgorithm:
          
         rand1 = random.randint(0,self.number_of_genes-2)
         rand2 = random.randint(rand1+1,self.number_of_genes-1)
-        #print(rand1,rand2) 
-        '''
-        for i in range(self.number_of_genes):
-            if(i<rand1 or i>rand2):
-                self.chromosomes[c1][i] = self.chromosomes[p1][i]
-                self.chromosomes[c2][i] = self.chromosomes[p2][i]
-            else:
-                self.chromosomes[c1][i] =  self.chromosomes[p2][i]
-                self.chromosomes[c2][i] =  self.chromosomes[p1][i]
-         ''' 
-         
+       
         for i in range(rand1,rand2+1):
             c1_gene = self.chromosomes[p2][i] 
             c2_gene = self.chromosomes[p1][i]
@@ -162,8 +149,6 @@ class GeneticAlgorithm:
                 self.mapping[c1_gene] = -3
                 self.mapping[c2_gene] = -3
                 
-        #print(self.mapping)      
-        #print(self.chromosomes[p2],self.chromosomes[p1])
         for i in range(self.number_of_genes):
             if(i>=rand1 and i<=rand2):
                 self.chromosomes[c1][i] =  self.chromosomes[p2][i]
@@ -178,8 +163,6 @@ class GeneticAlgorithm:
                     self.chromosomes[c2][i] = self.mapping[self.chromosomes[p2][i]]
                 else:
                     self.chromosomes[c2][i] =self.chromosomes[p2][i]
-       # print(self.chromosomes[c1],self.chromosomes[c2])
-        #print("===========")
         
     def do_roulette_wheel_selection(self,fitness_list):
         sum_fitness = sum(fitness_list)
