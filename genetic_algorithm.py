@@ -10,9 +10,8 @@ import numpy as np
 import sys
 import random
 from enum import Enum
-
 #%%
-class JSPProblem:
+class JAPProblem:
     def __init__(self,job_machine):
         self.job_machine = job_machine
         self.number_of_jobs = len(job_machine)
@@ -234,19 +233,19 @@ class GeneticAlgorithm:
         
 #%%
 data = pd.read_csv("data/EightJobs.csv")
-jsp = JSPProblem(data.values)
-jsp.compute_objective_value(range(len(data)))
+jap = JAPProblem(data.values)
+jap.compute_objective_value(range(len(data)))
 
-pop_size = 100
+pop_size = 30
 selection_type = SelectionType.Deterministic
 crossover_type = CrossoverType.PartialMappedCrossover
 crossover_rate = 0.2
 mutation_type = MutationType.Inversion
 mutation_rate = 0.1
-solver = GeneticAlgorithm(pop_size,jsp.number_of_jobs,selection_type,
+solver = GeneticAlgorithm(pop_size,jap.number_of_jobs,selection_type,
                           crossover_type,crossover_rate,
                           mutation_type,mutation_rate,
-                          jsp.compute_objective_value)
+                          jap.compute_objective_value)
 solver.initialize()
 
 for i in range(100):
@@ -256,4 +255,4 @@ for i in range(100):
     solver.update_best_solution()
     solver.perform_selection()
     if(i %10 ==0):
-        print(f"{solver.best_chromosome}: {jsp.compute_objective_value(solver.best_chromosome)}")
+        print(f"{solver.best_chromosome}: {jap.compute_objective_value(solver.best_chromosome)}")
