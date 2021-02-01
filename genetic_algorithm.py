@@ -221,7 +221,7 @@ data = pd.read_csv("data/EightJobs.csv")
 jap = JAPProblem(data.values)
 jap.compute_objective_value(range(len(data)))
 
-pop_size = 30
+pop_size = 50
 selection_type = SelectionType.Deterministic
 crossover_type = CrossoverType.PartialMappedCrossover
 crossover_rate = 0.2
@@ -240,4 +240,5 @@ for i in range(100):
     solver.update_best_solution()
     solver.perform_selection()
     if(i %10 ==0):
+        print(F"iteration {i} :")
         print(f"{solver.best_chromosome}: {jap.compute_objective_value(solver.best_chromosome)}")
